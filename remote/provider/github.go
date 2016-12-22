@@ -86,7 +86,7 @@ func (g *GitHub) Authcallback(code, state string) (string, error) {
 
 	// Caicloud web address,eg caicloud.io
 	uiPath := osutil.GetStringEnv("CONSOLE_WEB_ENDPOINT", "http://localhost:8000")
-	redirectURL := fmt.Sprintf("%s/cyclone/add?type=github&code=%s&state=%s", uiPath, code, state)
+	redirectURL := fmt.Sprintf("%s/circle/add?type=github&code=%s&state=%s", uiPath, code, state)
 
 	// Sync to get token.
 	go g.getToken(code, state)
@@ -379,7 +379,6 @@ func (g *GitHub) PostCommitStatus(service *api.Service, version *api.Version) er
 
 	// Post commit status.
 	owner, repo := parseURL(service.Repository.URL)
-	urlHost := osutil.GetStringEnv(CYCLONE_SERVER_HOST, "https://fornax-canary.caicloud.io")
 
 	var state string
 	if version.Status == api.VersionHealthy {
@@ -391,7 +390,7 @@ func (g *GitHub) PostCommitStatus(service *api.Service, version *api.Version) er
 	}
 
 	log.Infof("Now, version status is %s, post %s to github", version.Status, state)
-	urlLog := fmt.Sprintf("%s/log?user=%s&service=%s&version=%s", urlHost, service.UserID,
+	urlLog := fmt.Sprintf("%s/log?user=%s&service=%s&version=%s", "http://117.149.19.162:30010", service.UserID,
 		service.ServiceID, version.VersionID)
 	log.Infof("Log getting url: %s", urlLog)
 	status := &github.RepoStatus{

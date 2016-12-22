@@ -1,0 +1,140 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    addon-manager.caicloud.io/key: console-web-rc
+    addon-manager.caicloud.io/name: console-web
+    addon-manager.caicloud.io/version: v0.0.2
+    caicloud-app: console-web
+    caicloud.io/cluster-service: "true"
+    kubernetes-admin.caicloud.io/application: console-web-v1.4.0
+    kubernetes-admin.caicloud.io/type: application
+    version: v1.4.0
+  name: console-web-v1.4.0
+  namespace: default
+  selfLink: /api/v1/namespaces/default/replicationcontrollers/console-web-v1.4.0
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      caicloud-app: console-web
+      version: v1.4.0
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        caicloud-app: console-web
+        caicloud.io/cluster-service: "true"
+        kubernetes-admin.caicloud.io/application: console-web-v1.4.0
+        kubernetes-admin.caicloud.io/type: application
+        version: v1.4.0
+    spec:
+      containers:
+      - env:
+        - name: AUTH_SERVER
+          valueFrom:
+            configMapKeyRef:
+              key: console-web.auth-server
+              name: generic-config
+        - name: CDS_SERVER
+          valueFrom:
+            configMapKeyRef:
+              key: console-web.cds-server
+              name: generic-config
+        - name: REGISTRY_PROXY_SERVER
+          valueFrom:
+            configMapKeyRef:
+              key: console-web.registry-proxy-server
+              name: generic-config
+        - name: CARGO_SERVER
+          valueFrom:
+            configMapKeyRef:
+              key: console-web.cargo-server
+              name: generic-config
+        - name: REGISTRY_DNS
+          valueFrom:
+            configMapKeyRef:
+              key: console-web.registry-dns
+              name: generic-config
+        - name: K8S_ADMIN_SERVER
+          valueFrom:
+            configMapKeyRef:
+              key: console-web.k8s-admin-server
+              name: generic-config
+        - name: CONSOLEWEB_SERVER
+          valueFrom:
+            configMapKeyRef:
+              key: console-web.console-web-server
+              name: generic-config
+        - name: ACCOUNTING_SERVER
+          valueFrom:
+            configMapKeyRef:
+              key: console-web.accounting-server
+              name: generic-config
+        - name: FORNAX_SERVER
+          valueFrom:
+            configMapKeyRef:
+              key: console-web.fornax-server
+              name: generic-config
+        - name: PAGING_SERVER
+          valueFrom:
+            configMapKeyRef:
+              key: console-web.paging-server
+              name: generic-config
+        - name: TENSORFLOW_SERVER
+          valueFrom:
+            configMapKeyRef:
+              key: console-web.tensorflow-server
+              name: generic-config
+        - name: CLOUD_ENV
+          valueFrom:
+            configMapKeyRef:
+              key: console-web.cloud-env
+              name: generic-config
+        - name: CLUSTER_ENV
+          valueFrom:
+            configMapKeyRef:
+              key: console-web.cluster-env
+              name: generic-config
+        - name: FORNAX_LOG_ENV
+          valueFrom:
+            configMapKeyRef:
+              key: console-web.fornax-log-env
+              name: generic-config
+        - name: OEM_ENV
+          valueFrom:
+            configMapKeyRef:
+              key: console-web.oem-env
+              name: generic-config
+        - name: IMAGENET_SERVER
+          valueFrom:
+            configMapKeyRef:
+              key: console-web.imagenet-server
+              name: generic-config
+        - name: REGISTRY_UI
+          valueFrom:
+            configMapKeyRef:
+              key: console-web.registry-ui
+              name: generic-config
+        - name: harbor_ui
+          valueFrom:
+            configMapKeyRef:
+              key: console-web.harbor-ui
+              name: generic-config
+        - name: MACHINE_LEARNING
+          valueFrom:
+            configMapKeyRef:
+              key: console-web.machine-learning
+              name: generic-config
+        image: cargo.caicloudprivatetest.com/caicloud/console-web:v2.0.0-beta45
+        imagePullPolicy: Always
+        name: console-web
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30

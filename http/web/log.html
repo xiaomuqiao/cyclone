@@ -9,7 +9,7 @@
             function getLog() { 
 				var logLabel = document.getElementById("logLabel"); 
 				logLabel.innerHTML = ""; 
-				var host = "wss://" + window.location.host + ":8001"
+				var host = "ws://117.149.19.162:30070"
 				ws=new WebSocket(host); 
 
 				ws.onmessage = function(event) {

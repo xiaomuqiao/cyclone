@@ -87,7 +87,7 @@ func (g *GitLab) Authcallback(code, state string) (string, error) {
 
 	//caicloud web address,eg caicloud.io
 	uiPath := osutil.GetStringEnv("CONSOLE_WEB_ENDPOINT", "http://localhost:8000")
-	redirectURL := fmt.Sprintf("%s/cyclone/add?type=gitlab&code=%s&state=%s", uiPath, code, state)
+	redirectURL := fmt.Sprintf("%s/circle/add?type=gitlab&code=%s&state=%s", uiPath, code, state)
 
 	//sync to get token
 	go g.getToken(code, state)
@@ -331,7 +331,6 @@ func (g *GitLab) PostCommitStatus(service *api.Service, version *api.Version) er
 
 	// Post commit status.
 	owner, name := parseURL(service.Repository.URL)
-	urlHost := osutil.GetStringEnv(CYCLONE_SERVER_HOST, "https://fornax-canary.caicloud.io")
 
 	var state string
 	if version.Status == api.VersionHealthy {
@@ -343,7 +342,7 @@ func (g *GitLab) PostCommitStatus(service *api.Service, version *api.Version) er
 	}
 
 	log.Infof("Now, version status is %s, post %s to gitlab", version.Status, state)
-	urlLog := fmt.Sprintf("%s/log?user=%s&service=%s&version=%s", urlHost, service.UserID,
+	urlLog := fmt.Sprintf("%s/log?user=%s&service=%s&version=%s", "http://117.149.19.162:30010", service.UserID,
 		service.ServiceID, version.VersionID)
 	log.Infof("Log getting url: %s", urlLog)
 
